@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List of users</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Admin?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user: ${users}">
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+<!--        <td th:text="${user.roles}"></td>-->
+        <td th:each="role : ${user.roles}">
+            <p th:text="${role.name}"></p>
+        </td>
+        <td>
+            <form th:action="@{/users}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <label for="admin1">Give admin access?</label>
+                <input type="checkbox" id="admin1" name="isAdmin" value="admin" th:checked="${user.isAdmin}">
+                <button type="submit">Change</button>
+            </form>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
